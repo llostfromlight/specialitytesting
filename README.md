@@ -55,5 +55,12 @@ If you don't have Python, here are some alternatives:
 - **Or upload the contents of `build/web` to any static hosting service**  
   (like GitHub Pages, Netlify, Firebase Hosting, Vercel, etc.).
 
+### Web Release Version
+
+The release version of the app for web is available in the `webVersion` file.
+
+- You can deploy or serve the contents of the `webVersion` file/folder as your web app.
+- This is the optimized build output for production.
+
 ---
 *This is my first Flutter project. Feedback and suggestions are welcome!*
