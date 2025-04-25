@@ -22,6 +22,8 @@ A simple Flutter project to help users discover their natural IT talent through 
 4. Place your images in the `images/` directory as referenced in the code.
 5. Run the app with `flutter run`.
 
+# ther is apk in repostory file **app-release.apk**
+
 ## Notes
 
 - All main logic is in the `lib` folder.
