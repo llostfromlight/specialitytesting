@@ -1,36 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:specialitytesting/functions.dart';
 
-//Posible solutions :
-/*
-  1- Make list that contains all of the question thier image and thier text and special number 
-  called adding ration this used to know where is the next question, for example for question n1 this will be 1 question
-  in second we have 2 question and 4 answers in third we have 4 questions and 8 answer
-  that ration doubled from the past one and 
-
-  2- serial number using set put the objects inside the serial number would be the key
-  and value is object you look for 
-  every object has its serial number inside it too like for first question
-  1 is serial number for first yes 
-  0 for no 
-  second session 11 for yes or 10 if the second and ofc 00 and 01 and so on
-  like you just return serial number for next question from the function of that obj it will 
-  simply add 0 or 1 to its current serial number 
-  if no question found it will just print error
-
-  3- Or simply add make set where thers is maps has serial code as key and value is data needed (images,txt and methods for next serial code)?
-  
-
-  from those solutions i think the last one is most optimal ?
-*/
 class Question {
-  String code;
+  String code = "xxxxxx";
+  int? index;
   String txt = "error";
   Image image;
-  Question({required this.txt, required this.image, required this.code});
-  set updateimage(double height) {
-    image = (code == "") ?intilizeImage(path: "images/image.jpg",height: height) : intilizeImage(path: "images/$code.jpg",height: height);
+  Question(
+      {required this.txt, required this.image, required this.code, this.index});
+
+  Question.newlist({required this.txt, required this.image}) {
+    index = 0;
+    code = "xxxxxx";
   }
-  String yes() => '${code}1';
-  String no() => '${code}0';
+
+  Question update(double height, bool yn) {
+    if (index == null) throw (ArgumentError.notNull());
+    return Question(
+        code: updateCode(index: index!, ch: yn),
+        txt: questionList[index!],
+        image: initializeImage(name: "$index", height: height),
+        index: index);
+  }
+
+  void updateIndex(int x, double height) {
+    if (x > questionList.length || x < 0) throw (ArgumentError());
+    index = x;
+    image = initializeImage(name: "$index", height: height);
+    txt = questionList[index!];
+  }
+
+  String updateCode({required int index, required bool ch}) {
+    //since after you press on y or n index is already updated to next value and we must modefy the last digit not the current
+    //we go for index -1 and if the index is null it will throw anyways
+    return code.replaceRange(index - 1, index, ch ? "1" : "0");
+  }
+
+  String finish(bool yn) {
+    code = updateCode(index: index! + 1, ch: yn);
+    return code;
+  }
+
+  List<double> answertoList() {
+    List<double> l = [];
+    double n = double.parse(code);
+    for (var i = 0; i < code.length; i++) {
+      l.add(n % 10);
+      n = (n ~/ 10).toDouble();
+    }
+    return l.reversed.toList();
+  }
 }
